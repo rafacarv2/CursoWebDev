@@ -1,0 +1,17 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 04/04/2017, 19:04:08
+    Author     : rafael.carvalho
+*/
+
+body{padding-top: 70px;}
+.jumbotron{
+	color: #2c3e50; 
+	background-color: #ecf0f1;
+}
+.navbar-inverse{background: #2c3e50;}
+.navbar-inverse ce.navbar-nav>li>a, .navbar-inverse  .navbar-brand{color:white;}

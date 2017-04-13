@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Color Game</title>
+		<link href="https://fonts.googleapis.com/css?family=Nunito:300,600" rel="stylesheet">
+
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function (event) {
+				var numSquares = 6;
+				var colors = [];
+				var pickedColor;
+				var squares = document.getElementsByClassName("square");
+				var colorDisplay = document.getElementById("colorDisplay");
+				var messageDisplay = document.getElementById("message");
+				var header = document.getElementById("header");
+				var resetButton = document.getElementById("reset");
+				var modeButtons = document.getElementsByClassName("mode");
+
+
+
+				colorDisplay.textContent = pickedColor;
+
+				init();
+
+				function init() {
+					setupModeButtons();
+					setupSquares();
+					reset();
+				}
+
+
+				function setupModeButtons() {
+					for (var i = 0; i < modeButtons.length; i++) {
+						modeButtons[i].addEventListener("click", function () {
+							modeButtons[0].classList.remove("selected");
+							modeButtons[1].classList.remove("selected");
+							this.classList.add("selected");
+							this.textContent === "Fácil" ? numSquares = 3 : numSquares = 6;
+							reset();
+
+						});
+
+					}
+				}
+
+				function setupSquares() {
+
+					for (var i = 0; i < squares.length; i++) {
+
+						squares[i].addEventListener("click", function () {
+
+							var clickedColor = this.style.background;
+
+							if (clickedColor === pickedColor) {
+								messageDisplay.textContent = "Correto!!!";
+								resetButton.textContent = "Jogar de Novo";
+								changeColors(clickedColor);
+								header.style.background = pickedColor;
+							} else {
+								this.style.background = "#232323";
+								messageDisplay.textContent = "Tente de novo";
+
+							}
+							console.log(this.id);
+						});
+					}
+				}
+
+				function reset() {
+
+					colors = generateRandomColors(numSquares);
+					pickedColor = pickColor();
+					colorDisplay.textContent = pickedColor;
+					header.style.background = "steelblue";
+					messageDisplay.textContent = "";
+					for (var i = 0; i < squares.length; i++) {
+						if (colors[i]) {
+
+							squares[i].style.display = "block";
+							squares[i].style.background = colors[i];
+						} else {
+							squares[i].style.display = "none";
+						}
+
+					}
+					resetButton.textContent = "Novas Cores";
+
+				}
+
+				resetButton.addEventListener("click", function () {
+					reset(numSquares);
+				});
+
+
+				function changeColors(color) {
+					for (var i = 0; i < squares.length; i++) {
+						squares[i].style.background = color;
+					}
+
+				}
+
+				function pickColor() {
+					var randomColor = Math.floor(Math.random() * colors.length);
+					return colors[randomColor];
+				}
+
+				function generateRandomColors(num) {
+
+					var arr = [];
+
+					for (var i = 0; i < num; i++) {
+						arr.push(randomColor());
+					}
+
+					return arr;
+
+				}
+
+				function randomColor() {
+					var r = Math.floor(Math.random() * 256);
+					var g = Math.floor(Math.random() * 256);
+					var b = Math.floor(Math.random() * 256);
+					return "rgb(" + r + ", " + g + ", " + b + ")";
+				}
+
+			});
+
+
+		</script>
+		<style>
+			body{
+				background: #232323;
+				margin: 0;
+				font-family: 'Nunito', sans-serif;
+			}
+
+			h1{
+				text-align: center;
+				color: white;
+				margin: 0;
+				background: steelblue;
+				text-transform: uppercase;
+				line-height: 1.1;
+				padding: 20px 0;
+				font-weight: 300;
+				transition: background 0.6s;
+			}
+
+			button{
+
+				border: none;
+				background: none;
+				font-family: 'Nunito', sans-serif;
+				font-weight: 600;
+				text-transform: uppercase;
+				color: steelblue;
+				letter-spacing: 1px;
+				font-size: 200%;
+				/*height: 30px;*/
+				transition: all 0.3s;
+				outline: none;
+			}
+			button:hover{
+				color: white;
+				background: steelblue;
+			}
+
+			.square{
+				width: 30%;
+				background: purple;
+				padding-bottom: 30%;
+				float: left;
+				margin: 1.66%;
+				cursor: pointer;
+				border-radius: 15%;
+				transition: background 0.6s;
+
+			}
+			.selected{
+				background: steelblue;
+				color: white; 
+			}
+
+
+			#stripe {
+				background: white;
+				/*height: 30px;*/
+				text-align: center;
+				color: black;
+				margin-bottom:20px;
+			}
+			#header{color: white;}
+			#container{
+				margin: 0 auto;
+				/*max-width: 600px;*/
+			}
+			#colorDisplay{font-size: 200%;}
+			#message{
+				display: inline-block;
+				width: 20%;
+			}
+		</style>
+    </head>
+    <body>
+		<h1 id="header">Adivinhe <br />
+			<span id="colorDisplay">RGB</span><br /> 
+			a cor</h1>
+		<div id="stripe">
+			<button id="reset">Novas cores</button>
+			<span id="message"></span>
+			<button class="mode" id="easyBtn">Fácil</button>
+			<button class="mode selected" id="hardBtn">Difícil</button>
+		</div>
+		<div id="container">
+			<div class="square" id="1"></div>
+			<div class="square" id="2"></div>
+			<div class="square" id="3"></div>
+			<div class="square" id="4"></div>
+			<div class="square" id="5"></div>
+			<div class="square" id="6"></div>
+		</div>
+    </body>
+
+</html>
